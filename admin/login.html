@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="icon" type="image/png" href="admin.png">
+  <title>Admin Login – Wisteria Trust</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+  <link rel="stylesheet" href="admin.css" />
+</head>
+
+<body class="login-page">
+
+  <!-- Background -->
+  <div class="login-bg"></div>
+
+  <div class="login-wrapper">
+    <div class="login-card">
+
+      <!-- Header -->
+      <div class="login-header">
+        <div class="login-logo">
+          <!-- Professional Trust Icon -->
+          <svg width="46" height="46" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M12 7l2.2 4.5 5 .7-3.6 3.4.9 5-4.5-2.4-4.5 2.4.9-5L4.8 12l5-.7L12 7z"
+              stroke="currentColor" stroke-width="1.2" fill="none"/>
+          </svg>
+        </div>
+        <h1>Wisteria Trust</h1>
+        <p>Admin Portal</p>
+      </div>
+
+      <!-- Form -->
+      <form id="loginForm" class="login-form">
+
+        <!-- Username -->
+        <div class="form-group">
+          <label for="email">Username</label>
+          <div class="input-box">
+            <!-- User Icon INSIDE box -->
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M4 20c0-4 4-6 8-6s8 2 8 6"
+                  stroke="currentColor" stroke-width="1.6"/>
+              </svg>
+            </span>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              placeholder="Enter your username"
+              autocomplete="username"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-box">
+            <!-- Lock Icon INSIDE box -->
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="5" y="11" width="14" height="9" rx="2"
+                  stroke="currentColor" stroke-width="1.6"/>
+                <path d="M8 11V8a4 4 0 118 0v3"
+                  stroke="currentColor" stroke-width="1.6"/>
+              </svg>
+            </span>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            />
+          </div>
+        </div>
+
+        <div id="errorMessage" class="error-message"></div>
+
+        <button type="submit" id="loginBtn" class="btn-login">
+          Sign In →
+        </button>
+
+      </form>
+
+      <!-- Footer -->
+      <div class="login-footer">
+        <div class="secure">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3z"
+              stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          Secure Connection
+        </div>
+        <p>© 2025 Wisteria Trust. All rights reserved.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="admin-config.js"></script>
+  <script src="admin-login.js"></script>
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="icon" type="image/png" href="admin.png">
+    <title>All Verifications - Wisteria Trust Admin</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="admin-header">
+        <div class="header-content">
+            <div class="logo">
+                <h1>Wisteria Trust <span class="admin-badge">Admin</span></h1>
+            </div>
+            <!-- Added theme toggle and mobile menu button -->
+            <div class="header-actions">
+                <button id="themeToggle" class="theme-toggle-btn" title="Toggle Dark/Light Mode">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="18.36" x2="5.64" y2="16.93"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                </button>
+                <button class="menu-toggle" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <nav class="nav-links" id="adminNav">
+                <a href="create.html" class="nav-link">Create Verification</a>
+                <a href="dashboard.html" class="nav-link active">All Verifications</a>
+                <button class="btn-logout">Logout</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Added analytics cards section -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-primary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 11l3 3L22 4"/>
+                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Total Verifications</div>
+                        <div class="stat-value" id="statTotal">0</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-success">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 11 12 14 16 14"/>
+                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Active</div>
+                        <div class="stat-value" id="statActive">0</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-warning">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Expired</div>
+                        <div class="stat-value" id="statExpired">0</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-danger">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="15" y1="9" x2="9" y2="15"/>
+                            <line x1="9" y1="9" x2="15" y2="15"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Revoked</div>
+                        <div class="stat-value" id="statRevoked">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-content">
+                        <h2>All Verifications</h2>
+                        <!-- Added bulk action controls -->
+                        <div class="bulk-actions">
+                            <button class="btn-bulk" id="bulkDeleteBtn" disabled>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"/>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                </svg>
+                                Delete Selected
+                            </button>
+                            <button class="btn-bulk btn-bulk-revoke" id="bulkRevokeBtn" disabled>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="15" y1="9" x2="9" y2="15"/>
+                                    <line x1="9" y1="9" x2="15" y2="15"/>
+                                </svg>
+                                Revoke Selected
+                            </button>
+                            <button class="btn-export" id="exportBtn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                                Export CSV
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls-row">
+                    <div class="search-group">
+                        <input type="text" id="searchInput" placeholder="Search by ID, Seller, Business, or Email..." class="input-search">
+                    </div>
+                    <!-- Added advanced filters -->
+                    <div class="filter-group">
+                        <select id="statusFilter" class="input-select">
+                            <option value="">All Status</option>
+                            <option value="ACTIVE">Active</option>
+                            <option value="REVOKED">Revoked</option>
+                            <option value="EXPIRED">Expired</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <select id="dateFilter" class="input-select">
+                            <option value="">All Time</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="expiring">Expiring Soon (7 days)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Table Container -->
+                <div class="table-container">
+                    <table class="verification-table">
+                        <thead>
+                            <tr>
+                                <!-- Added checkbox column for bulk selection -->
+                                <th class="checkbox-cell">
+                                    <input type="checkbox" id="selectAll" class="table-checkbox">
+                                </th>
+                                <th>ID</th>
+                                <th>Seller</th>
+                                <th>Business</th>
+                                <th>City</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Expiry</th>
+                                <th>Created</th>
+                                <th>Seller Page</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="verificationsTable">
+                            <!-- Sample Data -->
+                            <tr>
+                                <td><input type="checkbox" class="table-checkbox"></td>
+                                <td><span class="id-badge">VER-001</span></td>
+                                <td>John Smith</td>
+                                <td>Smith Electronics</td>
+                                <td>New York</td>
+                                <td>john@example.com</td>
+                                <td><span class="status-badge status-active">ACTIVE</span></td>
+                                <td>2025-12-31</td>
+                                <td>2025-01-15</td>
+                                <td>
+                                    <div class="action-icons">
+                                        <button class="icon-btn" title="Open">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                                <polyline points="15 3 21 3 21 9"/>
+                                                <line x1="10" y1="14" x2="21" y2="3"/>
+                                            </svg>
+                                        </button>
+                                        <button class="icon-btn" title="Copy">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1-2-2h9a2 2 0 0 1 2 2v1"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-edit" onclick="openEditModal('VER-001')">Edit</button>
+                                        <button class="btn-action btn-revoke">Revoke</button>
+                                        <button class="btn-action btn-delete">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="table-checkbox"></td>
+                                <td><span class="id-badge">VER-002</span></td>
+                                <td>Sarah Johnson</td>
+                                <td>Johnson & Co</td>
+                                <td>Los Angeles</td>
+                                <td>sarah@example.com</td>
+                                <td><span class="status-badge status-revoked">REVOKED</span></td>
+                                <td>2025-11-20</td>
+                                <td>2025-01-10</td>
+                                <td>
+                                    <div class="action-icons">
+                                        <button class="icon-btn" title="Open">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                                <polyline points="15 3 21 3 21 9"/>
+                                                <line x1="10" y1="14" x2="21" y2="3"/>
+                                            </svg>
+                                        </button>
+                                        <button class="icon-btn" title="Copy">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1-2-2h9a2 2 0 0 1 2 2v1"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-edit" onclick="openEditModal('VER-002')">Edit</button>
+                                        <button class="btn-action btn-expire">Expire</button>
+                                        <button class="btn-action btn-delete">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="table-checkbox"></td>
+                                <td><span class="id-badge">VER-003</span></td>
+                                <td>Michael Chen</td>
+                                <td>Chen Imports</td>
+                                <td>Chicago</td>
+                                <td>michael@example.com</td>
+                                <td><span class="status-badge status-expired">EXPIRED</span></td>
+                                <td>2024-12-01</td>
+                                <td>2024-06-15</td>
+                                <td>
+                                    <div class="action-icons">
+                                        <button class="icon-btn" title="Open">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                                <polyline points="15 3 21 3 21 9"/>
+                                                <line x1="10" y1="14" x2="21" y2="3"/>
+                                            </svg>
+                                        </button>
+                                        <button class="icon-btn" title="Copy">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1-2-2h9a2 2 0 0 1 2 2v1"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-action btn-edit" onclick="openEditModal('VER-003')">Edit</button>
+                                        <button class="btn-action btn-extend">Extend</button>
+                                        <button class="btn-action btn-delete">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-overlay" onclick="closeEditModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Verification</h3>
+                <button class="modal-close" onclick="closeEditModal()">&times;</button>
+            </div>
+            <form class="modal-form" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="editSeller">Seller Name</label>
+                    <input type="text" id="editSeller" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="editBusiness">Business Name</label>
+                    <input type="text" id="editBusiness" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="editCity">City</label>
+                    <input type="text" id="editCity" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="editEmail">Email</label>
+                    <input type="email" id="editEmail" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="editExpiry">Expiry Date</label>
+                    <input type="date" id="editExpiry" class="form-input" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                    <button type="button" class="btn-secondary" onclick="closeEditModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Extend Expiry Modal -->
+    <div id="extendModal" class="modal">
+        <div class="modal-overlay" onclick="closeExtendModal()"></div>
+        <div class="modal-content modal-compact">
+            <div class="modal-header">
+                <h3>Extend Verification Expiry</h3>
+                <button class="modal-close" onclick="closeExtendModal()">&times;</button>
+            </div>
+            <form class="modal-form" id="extendForm" onsubmit="return false;">
+                <p id="extendSubtitle" class="modal-subtitle">Select a new validity date for this seller verification.</p>
+                <div class="form-group">
+                    <label for="newExpiryDate">New Expiry Date</label>
+                    <input type="date" id="newExpiryDate" class="form-input" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary">Update Expiry</button>
+                    <button type="button" class="btn-secondary" onclick="closeExtendModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="admin-config.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
